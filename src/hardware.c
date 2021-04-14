@@ -172,7 +172,7 @@ extern uint8_t vnd_local_bd_addr[BD_ADDR_LEN];
 ******************************************************************************/
 
 static char fw_patchfile_path[256] = FW_PATCHFILE_LOCATION;
-static char fw_patchfile_name[128] = { 0 };
+static char fw_patchfile_name[128] = { "ap6212.hcd" };
 #if (VENDOR_LIB_RUNTIME_TUNING_ENABLED == TRUE)
 static int fw_patch_settlement_delay = -1;
 #endif
@@ -363,6 +363,8 @@ uint8_t line_speed_to_userial_baud(uint32_t line_speed)
         baud = USERIAL_BAUD_3M;
     else if (line_speed == 2000000)
         baud = USERIAL_BAUD_2M;
+    else if (line_speed == 1500000)
+        baud = USERIAL_BAUD_1_5M;
     else if (line_speed == 1000000)
         baud = USERIAL_BAUD_1M;
     else if (line_speed == 921600)

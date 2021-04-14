@@ -61,7 +61,7 @@
 
 /* Location of firmware patch files */
 #ifndef FW_PATCHFILE_LOCATION
-#define FW_PATCHFILE_LOCATION "/vendor/firmware/"  /* maguro */
+#define FW_PATCHFILE_LOCATION "/system/vendor/modules/"  /* maguro */
 #endif
 
 #ifndef UART_TARGET_BAUD_RATE
@@ -139,7 +139,7 @@
 
 /* HOST_WAKE Polarity - 0=Active Low, 1= Active High */
 #ifndef LPM_HOST_WAKE_POLARITY
-#define LPM_HOST_WAKE_POLARITY          1    /* maguro */
+#define LPM_HOST_WAKE_POLARITY          0    /* maguro */
 #endif
 
 /* LPM_ALLOW_HOST_SLEEP_DURING_SCO
@@ -415,7 +415,7 @@
     is received.
 */
 #ifndef HW_END_WITH_HCI_RESET
-#define HW_END_WITH_HCI_RESET    TRUE
+#define HW_END_WITH_HCI_RESET    FALSE
 #endif
 
 /******************************************************************************
@@ -425,6 +425,10 @@
 extern bt_vendor_callbacks_t *bt_vendor_cbacks;
 
 extern int hw_set_audio_state(bt_vendor_op_audio_state_t *p_state);
+
+extern int hw_set_patch_file_path(char *p_conf_name, char *p_conf_value, int param);
+
+extern int hw_set_patch_file_name(char *p_conf_name, char *p_conf_value, int param);
 
 #endif /* BT_VENDOR_BRCM_H */
 

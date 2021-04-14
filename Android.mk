@@ -1,7 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(BOARD_HAVE_BLUETOOTH_BCM),)
-
 include $(CLEAR_VARS)
 
 ifneq ($(BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR),)
@@ -31,7 +29,8 @@ LOCAL_C_INCLUDES += \
         $(BDROID_DIR)/hci/include \
         $(BDROID_DIR)/include \
         $(BDROID_DIR)/stack/include \
-        $(BDROID_DIR)/gki/ulinux
+        $(BDROID_DIR)/gki/ulinux \
+        hardware/aw/bluetooth/libaw/include
 
 LOCAL_C_INCLUDES += $(bdroid_C_INCLUDES)
 LOCAL_CFLAGS += $(bdroid_CFLAGS)
@@ -40,7 +39,9 @@ LOCAL_SHARED_LIBRARIES := \
         libcutils \
         liblog
 
-LOCAL_MODULE := libbt-vendor
+LOCAL_STATIC_LIBRARIES := libbt-aw libwifi_hardware_info
+
+LOCAL_MODULE := libbt-vendor-bcm
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_OWNER := broadcom
@@ -65,5 +66,3 @@ endif
 ifeq ($(TARGET_PRODUCT), gce_x86_phone)
     include $(LOCAL_PATH)/conf/google/gce_x86/Android.mk
 endif
-
-endif # BOARD_HAVE_BLUETOOTH_BCM

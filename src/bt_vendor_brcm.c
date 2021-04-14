@@ -31,6 +31,7 @@
 #include "bt_vendor_brcm.h"
 #include "upio.h"
 #include "userial_vendor.h"
+#include "module_info.h"
 
 #ifndef BTVND_DBG
 #define BTVND_DBG FALSE
@@ -58,6 +59,7 @@ void vnd_load_conf(const char *p_path);
 void hw_epilog_process(void);
 #endif
 
+#define FW_PATCHFILE_PATH_MAXLEN    248
 /******************************************************************************
 **  Variables
 ******************************************************************************/
@@ -112,6 +114,13 @@ static int init(const bt_vendor_callbacks_t* p_cb, unsigned char *local_bdaddr)
     ALOGW("*****************************************************************");
 #endif
 
+    hw_set_patch_file_path(NULL, FW_PATCHFILE_LOCATION, 0);
+    aw_get_wifi_module_info();
+    char patch_name[FW_PATCHFILE_PATH_MAXLEN];
+    memset(patch_name, 0, FW_PATCHFILE_PATH_MAXLEN);
+    sprintf(patch_name, "%s.hcd", module_info.mod_name);
+    hw_set_patch_file_name(NULL, patch_name, 0);
+
     userial_vendor_init();
     upio_init();
 
@@ -138,11 +147,26 @@ static int op(bt_vendor_opcode_t opcode, void *param)
     {
         case BT_VND_OP_POWER_CTRL:
             {
+                /*
                 int *state = (int *) param;
                 if (*state == BT_VND_PWR_OFF)
                     upio_set_bluetooth_power(UPIO_BT_POWER_OFF);
                 else if (*state == BT_VND_PWR_ON)
                     upio_set_bluetooth_power(UPIO_BT_POWER_ON);
+                */
+
+                int *state = (int *) param;
+                if (*state == BT_VND_PWR_OFF)
+                {
+
+                }
+                else if (*state == BT_VND_PWR_ON)
+                {
+                    upio_set_bluetooth_power(UPIO_BT_POWER_OFF);
+                    usleep(200000);
+                    upio_set_bluetooth_power(UPIO_BT_POWER_ON);
+                    usleep(200000);
+                }
             }
             break;
 
