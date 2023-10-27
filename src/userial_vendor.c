@@ -91,10 +91,16 @@ uint8_t userial_to_tcio_baud(uint8_t cfg_baud, uint32_t *baud)
         *baud = B115200;
     else if (cfg_baud == USERIAL_BAUD_4M)
         *baud = B4000000;
+    else if (cfg_baud == USERIAL_BAUD_3_5M)
+        *baud = B3500000;
     else if (cfg_baud == USERIAL_BAUD_3M)
         *baud = B3000000;
+    else if (cfg_baud == USERIAL_BAUD_2_5M)
+        *baud = B2500000;
     else if (cfg_baud == USERIAL_BAUD_2M)
         *baud = B2000000;
+    else if (cfg_baud == USERIAL_BAUD_1_5M)
+        *baud = B1500000;
     else if (cfg_baud == USERIAL_BAUD_1M)
         *baud = B1000000;
     else if (cfg_baud == USERIAL_BAUD_921600)
